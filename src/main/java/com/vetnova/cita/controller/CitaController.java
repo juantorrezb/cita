@@ -14,7 +14,7 @@ import com.vetnova.cita.model.Cita;
 import com.vetnova.cita.service.CitaService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -34,13 +34,13 @@ public class CitaController {
     }
 
     @PostMapping
-    public ResponseEntity<Cita> crearCita(@RequestBody Cita cita){
+    public ResponseEntity<Cita> crearCita(@RequestBody Cita cita) {
         Cita nuevaCita = citaService.guardarCita(cita);
         return new ResponseEntity<>(nuevaCita, HttpStatus.CREATED);
     }
     @GetMapping("/{id}")
     public ResponseEntity<Cita> getCita (@PathVariable Long id) {
-        Cita buscarCita = citaService.obtenerCitaPorId(id).orElse(null);
+        Cita buscarCita = citaService.obtenerCitaPorId(id);
         if (buscarCita == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -64,5 +64,14 @@ public class CitaController {
         return new ResponseEntity<>(citas, HttpStatus.OK);
     
     }
-    
+
+    @PostMapping("eliminar/{id}")
+    public ResponseEntity<Void> eliminarCita(@PathVariable Long id) {
+        Cita cita = citaService.obtenerCitaPorId(id);
+        if (cita == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        citaService.eliminarCita(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

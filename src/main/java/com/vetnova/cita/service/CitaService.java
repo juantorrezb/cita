@@ -1,7 +1,6 @@
 package com.vetnova.cita.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +18,8 @@ public class CitaService {
     public List<Cita> listarCitas() {
         return citaRepository.findAll();
     }
-    public Optional<Cita> obtenerCitaPorId(Long idCita) {
-        return citaRepository.findById(idCita);
+    public Cita obtenerCitaPorId(Long idCita) {
+        return citaRepository.findById(idCita).orElse(null);
     }
     public List<Cita> findByMascotaId (Long idMascota){
         return citaRepository.findByIdMascota(idMascota);
@@ -30,5 +29,8 @@ public class CitaService {
     }
     public List<Cita> findBySedeId (Long idSede){
         return citaRepository.findByIdSede(idSede);
+    }
+    public void eliminarCita(Long idCita) {
+        citaRepository.deleteById(idCita);
     }
 }

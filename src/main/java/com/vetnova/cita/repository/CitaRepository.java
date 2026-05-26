@@ -15,6 +15,8 @@ public interface CitaRepository extends JpaRepository<Cita, Long>{
     List<Cita> findByIdVeterinario(Long idVeterinario);
 
     List<Cita> findByIdSede(Long idSede);
+
+    void deleteById(Long idCita);
 }
 
 
